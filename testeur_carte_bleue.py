@@ -26,13 +26,49 @@ from __future__ import annotations
 import argparse
 import csv
 import os
+import platform
 import random
 import re
+import subprocess
 import sys
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 from typing import Iterable
+
+IS_WINDOWS = platform.system() == "Windows"
+IS_LINUX = platform.system() == "Linux"
+IS_MAC = platform.system() == "Darwin"
+
+if IS_WINDOWS:
+    os.system("")  # active le traitement des séquences ANSI sur cmd/PowerShell
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+        sys.stdin.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
+
+def clear_screen() -> None:
+    """Efface l'écran, cross-platform."""
+    try:
+        if IS_WINDOWS:
+            subprocess.run(["cmd", "/c", "cls"], check=False)
+        else:
+            subprocess.run(["clear"], check=False)
+    except Exception:
+        print("\n" * 50)
+
+
+def pause(msg: str = "Appuie sur Entrée pour continuer...") -> None:
+    """Pause cross-platform (Entrée sous Linux/Mac, pause sous Windows)."""
+    if IS_WINDOWS and not sys.stdin.isatty():
+        return
+    try:
+        input(msg)
+    except (EOFError, KeyboardInterrupt):
+        pass
 
 # ---------------------------------------------------------------------------
 # Affichage coloré via `rich` si dispo, sinon fallback en texte brut.
@@ -623,7 +659,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--mode", "-m", choices=["manuel", "fichier", "menu"], default="menu"
     )
+    parser.add_argument(
+        "--no-clear", action="store_true",
+        help="Ne pas effacer l'écran au démarrage (utile en mode non-interactif).",
+    )
     args = parser.parse_args(argv)
+
+    if not args.no_clear and sys.stdin.isatty():
+        clear_screen()
 
     if args.mode == "fichier" or args.fichier:
         try:
@@ -653,4 +696,16 @@ def main(argv: list[str] | None = None) -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        code = main()
+    except KeyboardInterrupt:
+        _warn("\nInterruption clavier.")
+        code = 130
+    except Exception as e:
+        _err(f"Erreur inattendue: {e}")
+        if IS_WINDOWS:
+            pause()
+        code = 1
+    if IS_WINDOWS and sys.stdin.isatty():
+        pause()
+    sys.exit(code)
