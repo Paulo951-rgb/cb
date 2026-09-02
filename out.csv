@@ -1,0 +1,4 @@
+numero,titulaire,mois,annee,cvv,statut_local,luhn,date,cvv_test,api_locale,banque,prepayee,fraude,montant_max,statut_final,raison,seed
+4466 2380 0325 1118,BENOITCHEVALIER,08,0032,743,OK,OK,OK,OK,APPROVED,OK,OK,MONTANT_ELEVE,5000,BLOQUÉE,Fraude : montant max 5000 € > seuil 4500 €.,1230
+4242 4242 4242 4242,ALICE DUPONT,12,0030,456,OK,OK,OK,OK,,,,,0,INVALIDE,Répétition suspecte: Seulement 2 chiffres distincts (≥ 5 attendu).,1224
+5555 5555 5555 4444,BOB,11,0028,789,OK,OK,OK,OK,,,,,0,INVALIDE,Répétition suspecte: Seulement 2 chiffres distincts (≥ 5 attendu).,1252

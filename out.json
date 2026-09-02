@@ -1,0 +1,184 @@
+{
+  "version": "2.0.0",
+  "date": "2026-09-02T11:08:34",
+  "seed_globale": null,
+  "resultats": [
+    {
+      "carte": {
+        "numero": "4466238003251118",
+        "mois": 8,
+        "annee": 32,
+        "cvv": "743",
+        "titulaire": "BENOITCHEVALIER"
+      },
+      "statut_final": "BLOQUÉE",
+      "raison": "Fraude : montant max 5000 € > seuil 4500 €.",
+      "montant_max": 5000,
+      "seed": 1230,
+      "tests_locaux": {
+        "Format": [
+          "OK",
+          "Format OK (16 chiffres)."
+        ],
+        "Luhn": [
+          "OK",
+          "Somme = 60 ≡ 0 (mod 10)."
+        ],
+        "Date d'expiration": [
+          "OK",
+          "Valide jusqu'à 08/2032."
+        ],
+        "CVV": [
+          "OK",
+          "CVV OK."
+        ],
+        "Équilibre pairs/impairs": [
+          "OK",
+          "|pairs-impairs| = 6 (seuil 30)."
+        ],
+        "Répétition suspecte": [
+          "OK",
+          "8 chiffres distincts, pas de répétition ≥ 4."
+        ],
+        "Somme anormale": [
+          "OK",
+          "Somme=54, moyenne=3.38 (attendu 2-7)."
+        ]
+      },
+      "api_locale": [
+        "APPROVED",
+        "API : carte approuvée par l'émetteur."
+      ],
+      "banque": [
+        "OK",
+        "Banque : compte en règle, provision suffisante."
+      ],
+      "prepayee": [
+        "OK",
+        "Carte prépayée : solde simulé 268 €."
+      ],
+      "fraude": [
+        "MONTANT_ELEVE",
+        "Fraude : montant max 5000 € > seuil 4500 €."
+      ]
+    },
+    {
+      "carte": {
+        "numero": "4242424242424242",
+        "mois": 12,
+        "annee": 30,
+        "cvv": "456",
+        "titulaire": "ALICE DUPONT"
+      },
+      "statut_final": "INVALIDE",
+      "raison": "Répétition suspecte: Seulement 2 chiffres distincts (≥ 5 attendu).",
+      "montant_max": 0,
+      "seed": 1224,
+      "tests_locaux": {
+        "Format": [
+          "OK",
+          "Format OK (16 chiffres)."
+        ],
+        "Luhn": [
+          "OK",
+          "Somme = 80 ≡ 0 (mod 10)."
+        ],
+        "Date d'expiration": [
+          "OK",
+          "Valide jusqu'à 12/2030."
+        ],
+        "CVV": [
+          "OK",
+          "CVV OK."
+        ],
+        "Équilibre pairs/impairs": [
+          "OK",
+          "|pairs-impairs| = 16 (seuil 30)."
+        ],
+        "Répétition suspecte": [
+          "KO",
+          "Seulement 2 chiffres distincts (≥ 5 attendu)."
+        ],
+        "Somme anormale": [
+          "OK",
+          "Somme=48, moyenne=3.00 (attendu 2-7)."
+        ]
+      },
+      "api_locale": [
+        "",
+        ""
+      ],
+      "banque": [
+        "",
+        ""
+      ],
+      "prepayee": [
+        "",
+        ""
+      ],
+      "fraude": [
+        "",
+        ""
+      ]
+    },
+    {
+      "carte": {
+        "numero": "5555555555554444",
+        "mois": 11,
+        "annee": 28,
+        "cvv": "789",
+        "titulaire": "BOB"
+      },
+      "statut_final": "INVALIDE",
+      "raison": "Répétition suspecte: Seulement 2 chiffres distincts (≥ 5 attendu).",
+      "montant_max": 0,
+      "seed": 1252,
+      "tests_locaux": {
+        "Format": [
+          "OK",
+          "Format OK (16 chiffres)."
+        ],
+        "Luhn": [
+          "OK",
+          "Somme = 60 ≡ 0 (mod 10)."
+        ],
+        "Date d'expiration": [
+          "OK",
+          "Valide jusqu'à 11/2028."
+        ],
+        "CVV": [
+          "OK",
+          "CVV OK."
+        ],
+        "Équilibre pairs/impairs": [
+          "OK",
+          "|pairs-impairs| = 0 (seuil 30)."
+        ],
+        "Répétition suspecte": [
+          "KO",
+          "Seulement 2 chiffres distincts (≥ 5 attendu)."
+        ],
+        "Somme anormale": [
+          "OK",
+          "Somme=76, moyenne=4.75 (attendu 2-7)."
+        ]
+      },
+      "api_locale": [
+        "",
+        ""
+      ],
+      "banque": [
+        "",
+        ""
+      ],
+      "prepayee": [
+        "",
+        ""
+      ],
+      "fraude": [
+        "",
+        ""
+      ]
+    }
+  ]
+}
