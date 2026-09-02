@@ -1,0 +1,618 @@
+{
+  "version": "2.2.0",
+  "date": "2026-09-02T11:33:21",
+  "seed_globale": 42,
+  "total": 5,
+  "resultats": [
+    {
+      "carte": {
+        "numero": "4466238003251118",
+        "mois": 8,
+        "annee": 32,
+        "cvv": "743",
+        "titulaire": "BENOITCHEVALIER"
+      },
+      "partie_carte": "Visa",
+      "statut_final": "OK",
+      "raison": "Tous les tests (locaux + 7 simulations) sont passés.",
+      "montant_max": 50,
+      "seed": 54010150,
+      "niveau_risque": "faible",
+      "tests_locaux": {
+        "Format": [
+          "OK",
+          "Format OK (16 chiffres)."
+        ],
+        "Luhn": [
+          "OK",
+          "Somme = 60 ≡ 0 (mod 10)."
+        ],
+        "Date d'expiration": [
+          "OK",
+          "Valide jusqu'à 08/2032."
+        ],
+        "CVV": [
+          "OK",
+          "CVV OK (3 chiffres)."
+        ],
+        "Caractères autorisés": [
+          "OK",
+          "Caractères autorisés (0-9, X/* terminal)."
+        ],
+        "Longueur des parties": [
+          "OK",
+          "Longueurs OK (n=16, m=08, a=2032, cvv=3)."
+        ],
+        "Zéros en tête": [
+          "OK",
+          "Pas de zéros en tête."
+        ],
+        "Patterns suspects": [
+          "OK",
+          "Aucun pattern suspect détecté."
+        ],
+        "Mois valide": [
+          "OK",
+          "Mois 08 valide."
+        ],
+        "Année valide": [
+          "OK",
+          "Année 2032 plausible."
+        ],
+        "CVV patterns": [
+          "OK",
+          "CVV non-trivial (743)."
+        ],
+        "Diversité chiffres": [
+          "OK",
+          "8 chiffres distincts."
+        ],
+        "Équilibre strict": [
+          "OK",
+          "|pairs-impairs| = 6 (seuil strict 20)."
+        ],
+        "Somme stricte": [
+          "OK",
+          "Somme=54, moyenne=3.38 (attendu 2.5-6.5)."
+        ]
+      },
+      "simulations": {
+        "api_stripe": [
+          "APPROVED",
+          "Stripe : transaction approuvée (plafond 2000 €).",
+          2000,
+          "faible"
+        ],
+        "banque_fr": [
+          "OK",
+          "Banque FR : compte en règle (plafond 500 €).",
+          500,
+          "faible"
+        ],
+        "prepayee": [
+          "OK",
+          "Prépayée : solde simulé 20 €.",
+          20,
+          "faible"
+        ],
+        "fraude": [
+          "OK",
+          "Fraude : aucun signalement.",
+          50,
+          "faible"
+        ],
+        "amazon_like": [
+          "APPROVED",
+          "Amazon-like : checkout autorisé (plafond 100 €).",
+          100,
+          "faible"
+        ],
+        "stripe_radar": [
+          "OK",
+          "Radar : aucun signal ML.",
+          0,
+          "faible"
+        ],
+        "banque_fr_v2": [
+          "OK",
+          "Banque FR v2 : transaction autorisée (plafond 5000 €).",
+          5000,
+          "faible"
+        ],
+        "micro_transaction": [
+          "AUTHORIZED",
+          "Micro-transaction 0.50€ autorisée.",
+          50
+        ]
+      }
+    },
+    {
+      "carte": {
+        "numero": "4242424242424242",
+        "mois": 12,
+        "annee": 30,
+        "cvv": "456",
+        "titulaire": "ALICE"
+      },
+      "partie_carte": "Visa",
+      "statut_final": "BLOQUÉE",
+      "raison": "Prépayée : non activée.",
+      "montant_max": 2000,
+      "seed": 48014142,
+      "niveau_risque": "élevé",
+      "tests_locaux": {
+        "Format": [
+          "OK",
+          "Format OK (16 chiffres)."
+        ],
+        "Luhn": [
+          "OK",
+          "Somme = 80 ≡ 0 (mod 10)."
+        ],
+        "Date d'expiration": [
+          "OK",
+          "Valide jusqu'à 12/2030."
+        ],
+        "CVV": [
+          "OK",
+          "CVV OK (3 chiffres)."
+        ],
+        "Caractères autorisés": [
+          "OK",
+          "Caractères autorisés (0-9, X/* terminal)."
+        ],
+        "Longueur des parties": [
+          "OK",
+          "Longueurs OK (n=16, m=12, a=2030, cvv=3)."
+        ],
+        "Zéros en tête": [
+          "OK",
+          "Pas de zéros en tête."
+        ],
+        "Patterns suspects": [
+          "WARN",
+          "Pattern connu : carte de test Stripe"
+        ],
+        "Mois valide": [
+          "OK",
+          "Mois 12 valide."
+        ],
+        "Année valide": [
+          "OK",
+          "Année 2030 plausible."
+        ],
+        "CVV patterns": [
+          "OK",
+          "CVV non-trivial (456)."
+        ],
+        "Diversité chiffres": [
+          "WARN",
+          "Seulement 2 chiffres distincts (≥ 5 attendu)."
+        ],
+        "Équilibre strict": [
+          "OK",
+          "|pairs-impairs| = 16 (seuil strict 20)."
+        ],
+        "Somme stricte": [
+          "OK",
+          "Somme=48, moyenne=3.00 (attendu 2.5-6.5)."
+        ]
+      },
+      "simulations": {
+        "api_stripe": [
+          "APPROVED",
+          "Stripe : transaction approuvée (plafond 5000 €).",
+          5000,
+          "faible"
+        ],
+        "banque_fr": [
+          "OK",
+          "Banque FR : compte en règle (plafond 500 €).",
+          500,
+          "faible"
+        ],
+        "prepayee": [
+          "INACTIVE",
+          "Prépayée : non activée.",
+          0,
+          "moyen"
+        ],
+        "fraude": [
+          "OK",
+          "Fraude : aucun signalement.",
+          2000,
+          "faible"
+        ],
+        "amazon_like": [
+          "APPROVED",
+          "Amazon-like : checkout autorisé (plafond 500 €).",
+          500,
+          "faible"
+        ],
+        "stripe_radar": [
+          "OK",
+          "Radar : aucun signal ML.",
+          0,
+          "faible"
+        ],
+        "banque_fr_v2": [
+          "OK",
+          "Banque FR v2 : transaction autorisée (plafond 200 €).",
+          200,
+          "faible"
+        ],
+        "micro_transaction": [
+          "AUTHORIZED",
+          "Micro-transaction 0.01€ autorisée.",
+          1
+        ]
+      }
+    },
+    {
+      "carte": {
+        "numero": "4111111111111111",
+        "mois": 12,
+        "annee": 30,
+        "cvv": "456",
+        "titulaire": "VISA_TEST"
+      },
+      "partie_carte": "Visa",
+      "statut_final": "OK",
+      "raison": "Tous les tests (locaux + 7 simulations) sont passés.",
+      "montant_max": 5000,
+      "seed": 19014055,
+      "niveau_risque": "élevé",
+      "tests_locaux": {
+        "Format": [
+          "OK",
+          "Format OK (16 chiffres)."
+        ],
+        "Luhn": [
+          "OK",
+          "Somme = 30 ≡ 0 (mod 10)."
+        ],
+        "Date d'expiration": [
+          "OK",
+          "Valide jusqu'à 12/2030."
+        ],
+        "CVV": [
+          "OK",
+          "CVV OK (3 chiffres)."
+        ],
+        "Caractères autorisés": [
+          "OK",
+          "Caractères autorisés (0-9, X/* terminal)."
+        ],
+        "Longueur des parties": [
+          "OK",
+          "Longueurs OK (n=16, m=12, a=2030, cvv=3)."
+        ],
+        "Zéros en tête": [
+          "OK",
+          "Pas de zéros en tête."
+        ],
+        "Patterns suspects": [
+          "WARN",
+          "Pattern connu : carte de test Visa classique"
+        ],
+        "Mois valide": [
+          "OK",
+          "Mois 12 valide."
+        ],
+        "Année valide": [
+          "OK",
+          "Année 2030 plausible."
+        ],
+        "CVV patterns": [
+          "OK",
+          "CVV non-trivial (456)."
+        ],
+        "Diversité chiffres": [
+          "WARN",
+          "Seulement 2 chiffres distincts (≥ 5 attendu)."
+        ],
+        "Équilibre strict": [
+          "OK",
+          "|pairs-impairs| = 3 (seuil strict 20)."
+        ],
+        "Somme stricte": [
+          "WARN",
+          "Somme=19, moyenne=1.19 (attendu 2.5-6.5)."
+        ]
+      },
+      "simulations": {
+        "api_stripe": [
+          "APPROVED",
+          "Stripe : transaction approuvée (plafond 5000 €).",
+          5000,
+          "faible"
+        ],
+        "banque_fr": [
+          "OK",
+          "Banque FR : compte en règle (plafond 500 €).",
+          500,
+          "faible"
+        ],
+        "prepayee": [
+          "OK",
+          "Prépayée : solde simulé 200 €.",
+          200,
+          "faible"
+        ],
+        "fraude": [
+          "OK",
+          "Fraude : aucun signalement.",
+          5000,
+          "faible"
+        ],
+        "amazon_like": [
+          "APPROVED",
+          "Amazon-like : checkout autorisé (plafond 3000 €).",
+          3000,
+          "faible"
+        ],
+        "stripe_radar": [
+          "OK",
+          "Radar : aucun signal ML.",
+          0,
+          "faible"
+        ],
+        "banque_fr_v2": [
+          "OK",
+          "Banque FR v2 : transaction autorisée (plafond 5000 €).",
+          5000,
+          "faible"
+        ],
+        "micro_transaction": [
+          "AUTHORIZED",
+          "Micro-transaction 0.01€ autorisée.",
+          1
+        ]
+      }
+    },
+    {
+      "carte": {
+        "numero": "1234567890123456",
+        "mois": 1,
+        "annee": 30,
+        "cvv": "111",
+        "titulaire": "FRAUDE"
+      },
+      "partie_carte": "Inconnue",
+      "statut_final": "INVALIDE",
+      "raison": "Luhn: Somme = 64 (non divisible par 10).",
+      "montant_max": 0,
+      "seed": 66003076,
+      "niveau_risque": "critique",
+      "tests_locaux": {
+        "Format": [
+          "OK",
+          "Format OK (16 chiffres)."
+        ],
+        "Luhn": [
+          "KO",
+          "Somme = 64 (non divisible par 10)."
+        ],
+        "Date d'expiration": [
+          "OK",
+          "Valide jusqu'à 01/2030."
+        ],
+        "CVV": [
+          "OK",
+          "CVV OK (3 chiffres)."
+        ],
+        "Caractères autorisés": [
+          "OK",
+          "Caractères autorisés (0-9, X/* terminal)."
+        ],
+        "Longueur des parties": [
+          "OK",
+          "Longueurs OK (n=16, m=01, a=2030, cvv=3)."
+        ],
+        "Zéros en tête": [
+          "OK",
+          "Pas de zéros en tête."
+        ],
+        "Patterns suspects": [
+          "WARN",
+          "Pattern connu : compteur linéaire"
+        ],
+        "Mois valide": [
+          "OK",
+          "Mois 01 valide."
+        ],
+        "Année valide": [
+          "OK",
+          "Année 2030 plausible."
+        ],
+        "CVV patterns": [
+          "KO",
+          "CVV trivial : 111."
+        ],
+        "Diversité chiffres": [
+          "OK",
+          "10 chiffres distincts."
+        ],
+        "Équilibre strict": [
+          "OK",
+          "|pairs-impairs| = 2 (seuil strict 20)."
+        ],
+        "Somme stricte": [
+          "OK",
+          "Somme=66, moyenne=4.12 (attendu 2.5-6.5)."
+        ]
+      },
+      "simulations": {
+        "api_stripe": [
+          "",
+          "",
+          0,
+          "faible"
+        ],
+        "banque_fr": [
+          "",
+          "",
+          0,
+          "faible"
+        ],
+        "prepayee": [
+          "",
+          "",
+          0,
+          "faible"
+        ],
+        "fraude": [
+          "",
+          "",
+          0,
+          "faible"
+        ],
+        "amazon_like": [
+          "",
+          "",
+          0,
+          "faible"
+        ],
+        "stripe_radar": [
+          "",
+          "",
+          0,
+          "faible"
+        ],
+        "banque_fr_v2": [
+          "",
+          "",
+          0,
+          "faible"
+        ],
+        "micro_transaction": [
+          "",
+          "",
+          0
+        ]
+      }
+    },
+    {
+      "carte": {
+        "numero": "0000000000000000",
+        "mois": 12,
+        "annee": 30,
+        "cvv": "000",
+        "titulaire": "NULL"
+      },
+      "partie_carte": "Inconnue",
+      "statut_final": "INVALIDE",
+      "raison": "Format: Ne commence jamais par 0. ; Zéros en tête: Le numéro commence par 0 (jamais valide).",
+      "montant_max": 0,
+      "seed": 13848,
+      "niveau_risque": "critique",
+      "tests_locaux": {
+        "Format": [
+          "KO",
+          "Ne commence jamais par 0."
+        ],
+        "Luhn": [
+          "OK",
+          "Somme = 0 ≡ 0 (mod 10)."
+        ],
+        "Date d'expiration": [
+          "OK",
+          "Valide jusqu'à 12/2030."
+        ],
+        "CVV": [
+          "OK",
+          "CVV OK (3 chiffres)."
+        ],
+        "Caractères autorisés": [
+          "OK",
+          "Caractères autorisés (0-9, X/* terminal)."
+        ],
+        "Longueur des parties": [
+          "OK",
+          "Longueurs OK (n=16, m=12, a=2030, cvv=3)."
+        ],
+        "Zéros en tête": [
+          "KO",
+          "Le numéro commence par 0 (jamais valide)."
+        ],
+        "Patterns suspects": [
+          "WARN",
+          "Pattern connu : carte nulle"
+        ],
+        "Mois valide": [
+          "OK",
+          "Mois 12 valide."
+        ],
+        "Année valide": [
+          "OK",
+          "Année 2030 plausible."
+        ],
+        "CVV patterns": [
+          "KO",
+          "CVV trivial : 000."
+        ],
+        "Diversité chiffres": [
+          "WARN",
+          "Seulement 1 chiffres distincts (≥ 5 attendu)."
+        ],
+        "Équilibre strict": [
+          "OK",
+          "|pairs-impairs| = 0 (seuil strict 20)."
+        ],
+        "Somme stricte": [
+          "WARN",
+          "Somme=0, moyenne=0.00 (attendu 2.5-6.5)."
+        ]
+      },
+      "simulations": {
+        "api_stripe": [
+          "",
+          "",
+          0,
+          "faible"
+        ],
+        "banque_fr": [
+          "",
+          "",
+          0,
+          "faible"
+        ],
+        "prepayee": [
+          "",
+          "",
+          0,
+          "faible"
+        ],
+        "fraude": [
+          "",
+          "",
+          0,
+          "faible"
+        ],
+        "amazon_like": [
+          "",
+          "",
+          0,
+          "faible"
+        ],
+        "stripe_radar": [
+          "",
+          "",
+          0,
+          "faible"
+        ],
+        "banque_fr_v2": [
+          "",
+          "",
+          0,
+          "faible"
+        ],
+        "micro_transaction": [
+          "",
+          "",
+          0
+        ]
+      }
+    }
+  ]
+}
