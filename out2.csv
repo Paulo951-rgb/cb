@@ -1,0 +1,6 @@
+numero,titulaire,mois,annee,cvv,format,luhn,date,cvv_test,caracteres,patterns,equilibre,somme,api_locale,banque,prepayee,fraude,montant_max,niveau_risque,statut_final,raison,seed
+4466 2380 0325 1118,BENOITCHEVALIER,08,0032,743,OK,OK,OK,OK,OK,OK,OK,OK,DECLINED,INEXISTANTE,OK,OK,300,critique,CARTE_INEXISTANTE,Banque FR : carte inconnue du réseau CB.,54002003
+4242 4242 4242 4242,ALICE,12,0030,456,OK,OK,OK,OK,OK,WARN,OK,OK,APPROVED,OK,OK,OK,300,moyen,OK,Tous les tests (locaux + 4 simulations) sont passés.,48001985
+4111 1111 1111 1111,VISA_TEST,12,0030,456,OK,OK,OK,OK,OK,WARN,OK,WARN,APPROVED,OK,INACTIVE,OK,5000,élevé,BLOQUÉE,Carte prépayée : non activée (1ère recharge non faite).,19001898
+1234 5678 9012 3456,FRAUDE,01,0030,111,OK,KO,OK,OK,OK,WARN,OK,OK,,,,,0,critique,INVALIDE,Luhn: Somme = 64 (non divisible par 10).,66002039
+0000 0000 0000 0000,NULL,12,0030,000,KO,OK,OK,KO,OK,WARN,OK,WARN,,,,,0,critique,INVALIDE,Format: Ne commence jamais par 0. ; CVV: CVV trivial (000/123/999).,1841

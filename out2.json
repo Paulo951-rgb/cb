@@ -1,0 +1,328 @@
+{
+  "version": "2.1.0",
+  "date": "2026-09-02T11:12:19",
+  "seed_globale": 42,
+  "total": 5,
+  "resultats": [
+    {
+      "carte": {
+        "numero": "4466238003251118",
+        "mois": 8,
+        "annee": 32,
+        "cvv": "743",
+        "titulaire": "BENOITCHEVALIER"
+      },
+      "statut_final": "CARTE_INEXISTANTE",
+      "raison": "Banque FR : carte inconnue du réseau CB.",
+      "montant_max": 300,
+      "seed": 54002003,
+      "niveau_risque": "critique",
+      "tests_locaux": {
+        "Format": [
+          "OK",
+          "Format OK (16 chiffres)."
+        ],
+        "Luhn": [
+          "OK",
+          "Somme = 60 ≡ 0 (mod 10)."
+        ],
+        "Date d'expiration": [
+          "OK",
+          "Valide jusqu'à 08/2032."
+        ],
+        "CVV": [
+          "OK",
+          "CVV OK (3 chiffres)."
+        ],
+        "Caractères autorisés": [
+          "OK",
+          "Caractères autorisés (0-9, X/* terminal)."
+        ],
+        "Patterns suspects": [
+          "OK",
+          "Aucun pattern suspect détecté."
+        ],
+        "Équilibre pairs/impairs": [
+          "OK",
+          "|pairs-impairs| = 6 (seuil strict 20)."
+        ],
+        "Somme anormale": [
+          "OK",
+          "Somme=54, moyenne=3.38 (attendu 2.5-6.5)."
+        ]
+      },
+      "api_locale": [
+        "DECLINED",
+        "API Stripe simulée : refus générique (do_not_honor)."
+      ],
+      "banque": [
+        "INEXISTANTE",
+        "Banque FR : carte inconnue du réseau CB."
+      ],
+      "prepayee": [
+        "OK",
+        "Carte prépayée : solde simulé 231 €."
+      ],
+      "fraude": [
+        "OK",
+        "Fraude : aucun signalement suspect."
+      ]
+    },
+    {
+      "carte": {
+        "numero": "4242424242424242",
+        "mois": 12,
+        "annee": 30,
+        "cvv": "456",
+        "titulaire": "ALICE"
+      },
+      "statut_final": "OK",
+      "raison": "Tous les tests (locaux + 4 simulations) sont passés.",
+      "montant_max": 300,
+      "seed": 48001985,
+      "niveau_risque": "moyen",
+      "tests_locaux": {
+        "Format": [
+          "OK",
+          "Format OK (16 chiffres)."
+        ],
+        "Luhn": [
+          "OK",
+          "Somme = 80 ≡ 0 (mod 10)."
+        ],
+        "Date d'expiration": [
+          "OK",
+          "Valide jusqu'à 12/2030."
+        ],
+        "CVV": [
+          "OK",
+          "CVV OK (3 chiffres)."
+        ],
+        "Caractères autorisés": [
+          "OK",
+          "Caractères autorisés (0-9, X/* terminal)."
+        ],
+        "Patterns suspects": [
+          "WARN",
+          "Pattern connu : carte de test Stripe"
+        ],
+        "Équilibre pairs/impairs": [
+          "OK",
+          "|pairs-impairs| = 16 (seuil strict 20)."
+        ],
+        "Somme anormale": [
+          "OK",
+          "Somme=48, moyenne=3.00 (attendu 2.5-6.5)."
+        ]
+      },
+      "api_locale": [
+        "APPROVED",
+        "API Stripe simulée : transaction approuvée."
+      ],
+      "banque": [
+        "OK",
+        "Banque FR : compte en règle, provision suffisante."
+      ],
+      "prepayee": [
+        "OK",
+        "Carte prépayée : solde simulé 59 €."
+      ],
+      "fraude": [
+        "OK",
+        "Fraude : aucun signalement suspect."
+      ]
+    },
+    {
+      "carte": {
+        "numero": "4111111111111111",
+        "mois": 12,
+        "annee": 30,
+        "cvv": "456",
+        "titulaire": "VISA_TEST"
+      },
+      "statut_final": "BLOQUÉE",
+      "raison": "Carte prépayée : non activée (1ère recharge non faite).",
+      "montant_max": 5000,
+      "seed": 19001898,
+      "niveau_risque": "élevé",
+      "tests_locaux": {
+        "Format": [
+          "OK",
+          "Format OK (16 chiffres)."
+        ],
+        "Luhn": [
+          "OK",
+          "Somme = 30 ≡ 0 (mod 10)."
+        ],
+        "Date d'expiration": [
+          "OK",
+          "Valide jusqu'à 12/2030."
+        ],
+        "CVV": [
+          "OK",
+          "CVV OK (3 chiffres)."
+        ],
+        "Caractères autorisés": [
+          "OK",
+          "Caractères autorisés (0-9, X/* terminal)."
+        ],
+        "Patterns suspects": [
+          "WARN",
+          "Pattern connu : carte de test Visa classique"
+        ],
+        "Équilibre pairs/impairs": [
+          "OK",
+          "|pairs-impairs| = 3 (seuil strict 20)."
+        ],
+        "Somme anormale": [
+          "WARN",
+          "Somme=19, moyenne=1.19 (attendu 2.5-6.5)."
+        ]
+      },
+      "api_locale": [
+        "APPROVED",
+        "API Stripe simulée : transaction approuvée."
+      ],
+      "banque": [
+        "OK",
+        "Banque FR : compte en règle, provision suffisante."
+      ],
+      "prepayee": [
+        "INACTIVE",
+        "Carte prépayée : non activée (1ère recharge non faite)."
+      ],
+      "fraude": [
+        "OK",
+        "Fraude : aucun signalement suspect."
+      ]
+    },
+    {
+      "carte": {
+        "numero": "1234567890123456",
+        "mois": 1,
+        "annee": 30,
+        "cvv": "111",
+        "titulaire": "FRAUDE"
+      },
+      "statut_final": "INVALIDE",
+      "raison": "Luhn: Somme = 64 (non divisible par 10).",
+      "montant_max": 0,
+      "seed": 66002039,
+      "niveau_risque": "critique",
+      "tests_locaux": {
+        "Format": [
+          "OK",
+          "Format OK (16 chiffres)."
+        ],
+        "Luhn": [
+          "KO",
+          "Somme = 64 (non divisible par 10)."
+        ],
+        "Date d'expiration": [
+          "OK",
+          "Valide jusqu'à 01/2030."
+        ],
+        "CVV": [
+          "OK",
+          "CVV OK (3 chiffres)."
+        ],
+        "Caractères autorisés": [
+          "OK",
+          "Caractères autorisés (0-9, X/* terminal)."
+        ],
+        "Patterns suspects": [
+          "WARN",
+          "Pattern connu : compteur linéaire"
+        ],
+        "Équilibre pairs/impairs": [
+          "OK",
+          "|pairs-impairs| = 2 (seuil strict 20)."
+        ],
+        "Somme anormale": [
+          "OK",
+          "Somme=66, moyenne=4.12 (attendu 2.5-6.5)."
+        ]
+      },
+      "api_locale": [
+        "",
+        ""
+      ],
+      "banque": [
+        "",
+        ""
+      ],
+      "prepayee": [
+        "",
+        ""
+      ],
+      "fraude": [
+        "",
+        ""
+      ]
+    },
+    {
+      "carte": {
+        "numero": "0000000000000000",
+        "mois": 12,
+        "annee": 30,
+        "cvv": "000",
+        "titulaire": "NULL"
+      },
+      "statut_final": "INVALIDE",
+      "raison": "Format: Ne commence jamais par 0. ; CVV: CVV trivial (000/123/999).",
+      "montant_max": 0,
+      "seed": 1841,
+      "niveau_risque": "critique",
+      "tests_locaux": {
+        "Format": [
+          "KO",
+          "Ne commence jamais par 0."
+        ],
+        "Luhn": [
+          "OK",
+          "Somme = 0 ≡ 0 (mod 10)."
+        ],
+        "Date d'expiration": [
+          "OK",
+          "Valide jusqu'à 12/2030."
+        ],
+        "CVV": [
+          "KO",
+          "CVV trivial (000/123/999)."
+        ],
+        "Caractères autorisés": [
+          "OK",
+          "Caractères autorisés (0-9, X/* terminal)."
+        ],
+        "Patterns suspects": [
+          "WARN",
+          "Pattern connu : carte nulle"
+        ],
+        "Équilibre pairs/impairs": [
+          "OK",
+          "|pairs-impairs| = 0 (seuil strict 20)."
+        ],
+        "Somme anormale": [
+          "WARN",
+          "Somme=0, moyenne=0.00 (attendu 2.5-6.5)."
+        ]
+      },
+      "api_locale": [
+        "",
+        ""
+      ],
+      "banque": [
+        "",
+        ""
+      ],
+      "prepayee": [
+        "",
+        ""
+      ],
+      "fraude": [
+        "",
+        ""
+      ]
+    }
+  ]
+}
