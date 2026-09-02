@@ -26,13 +26,49 @@ from __future__ import annotations
 import argparse
 import csv
 import os
+import platform
 import random
 import re
+import subprocess
 import sys
 from dataclasses import dataclass, field
 from datetime import date
 from pathlib import Path
 from typing import Iterable
+
+IS_WINDOWS = platform.system() == "Windows"
+IS_LINUX = platform.system() == "Linux"
+IS_MAC = platform.system() == "Darwin"
+
+if IS_WINDOWS:
+    os.system("")  # active le traitement des séquences ANSI sur cmd/PowerShell
+    try:
+        sys.stdout.reconfigure(encoding="utf-8")
+        sys.stderr.reconfigure(encoding="utf-8")
+        sys.stdin.reconfigure(encoding="utf-8")
+    except Exception:
+        pass
+
+
+def clear_screen() -> None:
+    """Efface l'écran, cross-platform."""
+    try:
+        if IS_WINDOWS:
+            subprocess.run(["cmd", "/c", "cls"], check=False)
+        else:
+            subprocess.run(["clear"], check=False)
+    except Exception:
+        print("\n" * 50)
+
+
+def pause(msg: str = "Appuie sur Entrée pour continuer...") -> None:
+    """Pause cross-platform (Entrée sous Linux/Mac, pause sous Windows)."""
+    if IS_WINDOWS and not sys.stdin.isatty():
+        return
+    try:
+        input(msg)
+    except (EOFError, KeyboardInterrupt):
+        pass
 
 # ---------------------------------------------------------------------------
 # Affichage coloré via `rich` si dispo, sinon fallback en texte brut.
@@ -300,35 +336,90 @@ def tester_carte(c: Carte) -> Resultat:
 SEPARATEURS = ["|", ";", "\t"]
 
 
+def _split_date_collee(champ: str) -> tuple[str, str] | None:
+    """
+    Sépare un champ 'moisannee' collé en (mois, annee).
+    Formats acceptés : 3 chiffres (MYY -> ex 832) ou 4 chiffres (MMYY -> ex 0832).
+    Renvoie None si le format ne ressemble pas à une date collée.
+    """
+    s = re.sub(r"\s+", "", champ)
+    if not s.isdigit():
+        return None
+    if len(s) == 3:
+        # MYY -> mois=1 chiffre, annee=2 chiffres
+        return s[0], s[1:]
+    if len(s) == 4:
+        return s[:2], s[2:]
+    if len(s) == 5:
+        # MYYYY ou MMYYY -> on tente MM/YY par défaut
+        return s[:2], s[3:]
+    if len(s) == 6:
+        # MMYYYY
+        return s[:2], s[2:]
+    return None
+
+
 def _split_ligne(ligne: str) -> list[str] | None:
-    """Découpe une ligne en [numero, mois, annee, cvv, nom]."""
+    """
+    Découpe une ligne en [numero, mois, annee, cvv, nom].
+
+    Format principal (reconnu en premier) :
+        numero, moisannee, CVV, nom
+    où 'moisannee' est collé (3 ou 4 chiffres).
+
+    Formats alternatifs (toujours supportés) :
+        numero|mois|annee|CVV|nom
+        numero, mois, annee, CVV, nom     (CSV classique 5 champs)
+        numero                            (le reste est auto-généré)
+    """
     ligne = ligne.strip()
     if not ligne or ligne.startswith("#"):
         return None
-    # CSV avec virgules
+
+    parts: list[str] | None = None
+
+    # --- 1) Format principal : virgules, 4 champs, mois/année collés ---
     if "," in ligne:
-        parts = [p.strip() for p in ligne.split(",")]
-    else:
+        brut = [p.strip() for p in ligne.split(",")]
+        if len(brut) == 4:
+            num_brut, date_brut, cvv_brut, nom_brut = brut
+            split = _split_date_collee(date_brut)
+            if split is not None:
+                mois_str, annee_str = split
+                parts = [num_brut, mois_str, annee_str, cvv_brut, nom_brut]
+        if parts is None:
+            # CSV classique 5 champs
+            if len(brut) == 5:
+                parts = brut
+            elif len(brut) > 5:
+                # Le nom peut contenir des virgules : on recolle l'excédent
+                parts = brut[:4] + [",".join(brut[4:])]
+            else:
+                parts = brut
+
+    # --- 2) Autres séparateurs ---
+    if parts is None:
         for sep in SEPARATEURS:
             if sep in ligne:
                 parts = [p.strip() for p in ligne.split(sep)]
                 break
-        else:
-            # Numéro seul sur la ligne, on génère le reste
-            parts = [ligne]
-    # Normalisation
+
+    # --- 3) Numéro seul ---
+    if parts is None:
+        parts = [ligne]
+
+    # --- 4) Normalisation à 5 champs ---
     while len(parts) < 5:
         if len(parts) == 1:
-            # Génère des valeurs plausibles à partir du numéro
             n = re.sub(r"\s+", "", parts[0])
             seed = sum(int(ch) for ch in n if ch.isdigit())
             rng = random.Random(seed)
             parts.extend(
                 [
-                    str(rng.randint(1, 12)),  # mois
-                    str(rng.randint(26, 32)),  # annee 2026-2032
-                    f"{rng.randint(100, 999)}",  # CVV
-                    f"TESTEUR_{rng.randint(1, 99):02d}",  # nom
+                    str(rng.randint(1, 12)),
+                    str(rng.randint(26, 32)),
+                    f"{rng.randint(100, 999)}",
+                    f"TESTEUR_{rng.randint(1, 99):02d}",
                 ]
             )
         elif len(parts) == 2:
@@ -341,7 +432,7 @@ def _split_ligne(ligne: str) -> list[str] | None:
 
 
 def _parse_carte(parts: list[str]) -> Carte:
-    """Construit une Carte à partir des champs bruts."""
+    """Construit une Carte à partir des champs bruts [num, mois, annee, cvv, nom]."""
     num, mois, annee, cvv, nom = parts
     num = re.sub(r"\s+", "", num)
     try:
@@ -387,8 +478,10 @@ def charger_fichier(chemin: Path, limite: int = 200) -> list[Carte]:
 
 def mode_manuel() -> list[Carte]:
     """Demande interactivement des cartes à l'utilisateur."""
-    _info("Mode Manuel : entre tes cartes une par une.")
-    _info("Format attendu : numero|mois|annee|CVV|nom  (champs optionnels)")
+    _info("Mode Manuel : entre tes cartes une par ligne.")
+    _info("Format principal : numero, moisannee, CVV, nom")
+    _info("  ex: 4466238003251118, 0832, 743, BENOITCHEVALIER")
+    _info("Autres formats acceptés : numero|mois|annee|CVV|nom")
     _info("Laisse vide pour terminer.\n")
 
     cartes: list[Carte] = []
@@ -566,7 +659,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--mode", "-m", choices=["manuel", "fichier", "menu"], default="menu"
     )
+    parser.add_argument(
+        "--no-clear", action="store_true",
+        help="Ne pas effacer l'écran au démarrage (utile en mode non-interactif).",
+    )
     args = parser.parse_args(argv)
+
+    if not args.no_clear and sys.stdin.isatty():
+        clear_screen()
 
     if args.mode == "fichier" or args.fichier:
         try:
@@ -596,4 +696,16 @@ def main(argv: list[str] | None = None) -> int:
 
 
 if __name__ == "__main__":
-    sys.exit(main())
+    try:
+        code = main()
+    except KeyboardInterrupt:
+        _warn("\nInterruption clavier.")
+        code = 130
+    except Exception as e:
+        _err(f"Erreur inattendue: {e}")
+        if IS_WINDOWS:
+            pause()
+        code = 1
+    if IS_WINDOWS and sys.stdin.isatty():
+        pause()
+    sys.exit(code)
